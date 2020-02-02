@@ -7,7 +7,10 @@ import FactoryReqJson from '../src/FactoryReqJson';
 
 const reqJson = new FactoryReqJson();
 
+const debug=1;
+
 describe('LibAsyncReqJson  ', function() {
+
   it('requestGET', async () => {
     let url = 'https://jsonplaceholder.typicode.com/todos/1';
 

@@ -1,0 +1,12 @@
+{
+  "name": "@iqdavid/libfront",
+  "version": "1.0.0",
+  "description": "Libreria para proyectos front",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "davidh <david@productividadti.com.mx> (productividadti.com.mx)",
+  "license": "ISC"
+}

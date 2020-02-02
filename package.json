@@ -2,6 +2,7 @@
   "name": "@iqdavid/libfront",
   "version": "1.1.0",
   "description": "Libreria para proyectos front",
+  "license": "MIT",
   "main": "index.js",
   "scripts": {
     "test": "mocha --require @babel/register  test/**/*.test.js",
@@ -14,7 +15,6 @@
   },
   "keywords": [],
   "author": "davidh <david@productividadti.com.mx> (productividadti.com.mx)",
-  "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.8.4",
     "@babel/preset-env": "^7.8.4",

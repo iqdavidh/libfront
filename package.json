@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha --require @babel/register  test/**/*.test.js",
     "test-FactoryReqJson": "mocha --require @babel/register  test/FactoryReqJson.test.js",
-    "test-fnCopiarPropiedades": "mocha --require @babel/register  test/fnCopiarPropiedades.test.js",
+    "test-fnCopiarPropiedades": "mocha --require @babel/register  test/CopiarPropiedades.test.js",
     "test-LibFecha": "mocha --require @babel/register  test/LibFecha.test.js",
     "test-LibNum": "mocha --require @babel/register  test/LibNum.test.js",
     "test-LibTexto": "mocha --require @babel/register  test/LibTexto.test.js",

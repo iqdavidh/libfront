@@ -1,6 +1,6 @@
 import { assert } from 'chai';
 import {describe} from 'mocha';
-import fn from '../src/fnCopiarPropiedades';
+import fn from '../src/CopiarPropiedades';
 
 describe('Solo se copian propiedades', () => {
   it('OK - simplemente se compran', () => {

@@ -1,5 +1,6 @@
-import { assert } from 'chai';
-import LibFecha from '../src/LibFecha';
+const {assert} = require('chai');
+const LibFecha = require('../src/LibFecha');
+
 
 /*
  * Libreria para procesar las fechas, convertir fechas, ver periodos, un paso antes de moment

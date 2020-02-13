@@ -1,5 +1,5 @@
-import { assert } from 'chai';
-import LibNum from '../src/LibNum';
+const {assert} = require('chai');
+const LibNum = require('../src/LibNum.js');
 
 describe('LibNum ', function() {
   it('getRandom - random a partir de un min a un max', function() {

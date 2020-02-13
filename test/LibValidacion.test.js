@@ -1,5 +1,5 @@
-import { assert } from 'chai';
-import LibValidacion from '../src/LibValidacion';
+const {assert} = require('chai');
+const LibValidacion = require('../src/LibValidacion');
 
 describe('LibValidacion.isNotEmpty validar que un valor no es vacio or null', () => {
   it('isNotEmpty - el valor no puede ser vacio', () => {

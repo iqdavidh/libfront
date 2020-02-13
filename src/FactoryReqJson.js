@@ -1,4 +1,4 @@
-import axios from 'axios';
+const axios = require('axios').default;
 
 const FactoryReqJson = (factoryHeader = null) => {
     let isDebug = true;
@@ -191,4 +191,4 @@ const FactoryReqJson = (factoryHeader = null) => {
     }
 };
 
-export default FactoryReqJson;
+module.exports = FactoryReqJson;

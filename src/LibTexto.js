@@ -12,4 +12,4 @@ const LibTexto = {
 };
 
 
-export default LibTexto;
+module.exports =  LibTexto;

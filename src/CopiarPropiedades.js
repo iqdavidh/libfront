@@ -4,4 +4,4 @@ const copiarPropiedades = (objetoDestino, objetoOrigen, listaProp) => {
   });
 };
 
-export default copiarPropiedades;
+module.exports = copiarPropiedades;

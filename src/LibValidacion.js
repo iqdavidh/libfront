@@ -47,4 +47,4 @@ const LibValidacion = {
     }
 };
 
-export default LibValidacion;
+module.exports =  LibValidacion;

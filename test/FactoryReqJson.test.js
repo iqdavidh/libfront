@@ -1,11 +1,11 @@
-import { assert } from 'chai';
-import FactoryReqJson from '../src/FactoryReqJson';
+const {assert} = require('chai');
+const FactoryReqJson = require ('../src/FactoryReqJson');
 
 /*
  * La libreria para hacer todas las lalmdas http REST , usamos await async
  * */
 
-const reqJson = new FactoryReqJson();
+const reqJson = FactoryReqJson();
 
 const debug=1;
 

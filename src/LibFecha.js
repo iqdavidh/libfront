@@ -110,4 +110,4 @@ const LibFecha = {
   }
 };
 
-export default LibFecha;
+module.exports =  LibFecha;

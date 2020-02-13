@@ -8,4 +8,4 @@ const LibNum = {
   }
 };
 
-export default LibNum;
+module.exports =  LibNum;

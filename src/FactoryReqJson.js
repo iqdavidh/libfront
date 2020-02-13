@@ -21,6 +21,20 @@ const FactoryReqJson = (factoryHeader = null) => {
         'Content-Type': 'application/json'
     };
 
+    const handleCatchError = (error, url) => {
+        consoleIfDebug(error.response);
+        logRequest(error.response, 'error', url);
+
+        if (error.response && typeof error.response.data !== 'undefined') {
+            return error.response.data;
+        }
+
+        return {
+            success: false,
+            msg: error
+        };
+    };
+
     return {
         setIsDebug: () => {
             isDebug = true;
@@ -28,20 +42,6 @@ const FactoryReqJson = (factoryHeader = null) => {
         setModoLogResquest: pathToDirLog => {
             pathLogRequest = pathToDirLog;
         },
-        handleCatchError: (error, url) => {
-            consoleIfDebug(error.response);
-            logRequest(error.response, 'error', url);
-
-            if (error.response && typeof error.response.data !== 'undefined') {
-                return error.response.data;
-            }
-
-            return {
-                success: false,
-                msg: error
-            };
-        },
-
         requestGET: async (url, paramHeader) => {
 
             consoleIfDebug(url);

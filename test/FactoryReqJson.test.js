@@ -1,5 +1,5 @@
 const {assert} = require('chai');
-const FactoryReqJson = require ('../src/FactoryReqJson');
+const FactoryReqJson = require('../src/FactoryReqJson');
 
 /*
  * La libreria para hacer todas las lalmdas http REST , usamos await async
@@ -7,12 +7,12 @@ const FactoryReqJson = require ('../src/FactoryReqJson');
 
 const reqJson = FactoryReqJson();
 
-const debug=1;
+const debug = 1;
 
-describe('LibAsyncReqJson  ', function() {
+describe('LibAsyncReqJson  ', function () {
 
   it('requestGET', async () => {
-    let url = 'https://jsonplaceholder.typicode.com/todos/1';
+    let url = 'https://reqres.in/api/users/1';
 
     let respuesta = await reqJson.requestGET(url);
 
@@ -20,15 +20,16 @@ describe('LibAsyncReqJson  ', function() {
       typeof respuesta === 'object',
       'no se recibio una respueesta correcta'
     );
-    assert(respuesta.userId.toString() === '1', 'El dato userID no viene');
+    assert(respuesta.data.id.toString() === '1', 'El dato userID no viene');
+
+
   });
 
   it('requestPOST', async () => {
-    let url = 'https://jsonplaceholder.typicode.com/posts';
+    let url = 'https://reqres.in/api/users';
     const dataPost = {
-      title: 'foo',
-      body: 'bar',
-      userId: 1
+      "name": "morpheus",
+      "job": "leader"
     };
 
     let respuestaPost = await reqJson.requestPOST(url, dataPost);
@@ -37,17 +38,20 @@ describe('LibAsyncReqJson  ', function() {
       typeof respuestaPost === 'object',
       'no se recibio una respueesta correcta'
     );
-    assert(respuestaPost.body === dataPost.body, 'El dato ubody no se paso');
+    assert(respuestaPost.name === dataPost.name, 'El dato ubody no se paso');
+
+
   });
 
   it('requestDELETE', async () => {
-    let url = 'https://jsonplaceholder.typicode.com/todos/1';
+    let url = 'https://reqres.in/api/users';
 
     let respuesta = await reqJson.requestDELETE(url);
 
     assert(
-      typeof respuesta === 'object',
+      respuesta === '',
       'no se recibio una respueesta correcta'
     );
+
   });
 });

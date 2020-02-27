@@ -1,6 +1,6 @@
 {
   "name": "@iqdavidh/libfront",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "Libreria para proyectos front",
   "license": "MIT",
   "main": "index.js",
@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
+    "moment-timezone": "^0.5.28",
     "prettier": "^1.18.2"
   }
 }

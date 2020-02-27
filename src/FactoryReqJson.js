@@ -36,8 +36,8 @@ const FactoryReqJson = (factoryHeader = null) => {
     };
 
     return {
-        setIsDebug: () => {
-            isDebug = true;
+        setIsDebug: (b=true) => {
+            isDebug = b;
         },
         setModoLogResquest: pathToDirLog => {
             pathLogRequest = pathToDirLog;

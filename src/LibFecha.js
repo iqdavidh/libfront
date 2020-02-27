@@ -1,3 +1,5 @@
+const moment =require('moment-timezone');
+
 const listaDiaSemana = ['Dom', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'];
 const listaMes = [
   'Enero',
@@ -48,7 +50,7 @@ const LibFecha = {
 
     return f;
   },
-  getFYMDFromDate: d => {
+  getYMDFromDate: d => {
     let y = d.getFullYear();
     let mes = d.getMonth() + 1;
     let dia = d.getDate();
@@ -107,7 +109,11 @@ const LibFecha = {
   getDateFromAddDays(date, dias) {
     let ts = date.getTime() + dias * 86400000;
     return new Date(ts);
+  },
+  getFechaFromTS(timeStampMS, formato='DD/MM/YYYY', tz="America/Mexico_City"){
+    return moment( new Date(timeStampMS)).tz(tz).format(formato);
   }
+
 };
 
 module.exports =  LibFecha;

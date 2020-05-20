@@ -1,6 +1,6 @@
 {
   "name": "@iqdavidh/libfront",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "Libreria para proyectos front",
   "license": "MIT",
   "main": "index.js",

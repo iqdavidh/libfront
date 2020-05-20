@@ -1,5 +1,18 @@
 const axios = require('axios').default;
 
+async function getHeaders(factoryHeader, paramHeader, customHeaders) {
+    let facHeaders = {};
+    if (typeof factoryHeader === 'function') {
+        facHeaders = factoryHeader();
+        //en caso de ser promise------------
+        if (facHeaders.then) {
+            facHeaders = await factoryHeader();
+        }
+    }
+    let headers = {...paramHeader, ...customHeaders, ...facHeaders};
+    return headers;
+}
+
 const FactoryReqJson = (factoryHeader = null) => {
     let isDebug = true;
     let pathLogRequest = null;
@@ -46,13 +59,8 @@ const FactoryReqJson = (factoryHeader = null) => {
 
             consoleIfDebug(url);
             logRequest({url}, 'request', url);
-
-            let facHeaders = {};
-
-            if (typeof factoryHeader === 'function') {
-                facHeaders = factoryHeader();
-            }
-            let headers = {...paramHeader, ...customHeaders, ...facHeaders};
+    
+            let headers = await getHeaders(factoryHeader, paramHeader, customHeaders);
 
             try {
                 return await axios
@@ -75,12 +83,8 @@ const FactoryReqJson = (factoryHeader = null) => {
 
             const dataObjectForLog = {...dataObject, ...paramHeader, url};
             logRequest(dataObjectForLog, 'request', url);
-
-            let facHeaders = {};
-            if (typeof factoryHeader === 'function') {
-                facHeaders = factoryHeader();
-            }
-            let headers = {...paramHeader, ...customHeaders, ...facHeaders};
+    
+            let headers = await getHeaders(factoryHeader, paramHeader, customHeaders);
 
             try {
                 return await axios
@@ -102,13 +106,8 @@ const FactoryReqJson = (factoryHeader = null) => {
 
             consoleIfDebug(url);
             logRequest({url}, 'request', url);
-
-            let facHeaders = {};
-            if (typeof factoryHeader === 'function') {
-                facHeaders = factoryHeader();
-            }
-            let headers = {...paramHeader, ...customHeaders, ...facHeaders};
-
+            let headers = await getHeaders(factoryHeader, paramHeader, customHeaders);
+    
             try {
                 return await axios
                     .delete(url, headers)

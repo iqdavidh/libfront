@@ -1,5 +1,10 @@
 #FactoryReqJson
 
+
+####1.2.5
+fnHeader puder ser async  2020-05-20
+
+## Uso
 Es un factory para un objeto qeu hace request a api
 
 ```

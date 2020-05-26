@@ -1,5 +1,19 @@
 #FactoryReqJson
 
+####1.3
+Agregado propiedad startMockup que permite trabajar 
+en modo test haciendo mockup de los request
+
+```
+reqJson.registrarRespuestaMockUp(
+  {
+    data: "yea",    
+  },
+  "post",
+  "https://reqres.in/api/users");
+
+reqJson.startMockup();
+```
 
 ####1.2.5
 fnHeader puder ser async  2020-05-20

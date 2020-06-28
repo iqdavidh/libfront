@@ -1,5 +1,9 @@
 #FactoryReqJson
 
+####1.3.1
+Agregado mecanimso para guardar las respuestas para sesiones mockup
+
+
 ####1.3
 Agregado propiedad startMockup que permite trabajar 
 en modo test haciendo mockup de los request

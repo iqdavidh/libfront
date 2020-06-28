@@ -7,27 +7,14 @@ const FactoryReqJson = require('../src/FactoryReqJson');
 
 const reqJson = FactoryReqJson();
 
+reqJson.setIsDebug(true);
+
 /* Habilitar Modo Mockup*/
-reqJson.registrarRespuestaMockUp(
-  {
-    data: "ok",
-    target: "https://reqres.in/api/users/1"
-  },
-  "get",
-  "https://reqres.in/api/users/1");
-
-reqJson.registrarRespuestaMockUp(
-  {
-    data: "yea",
-    target: "https://reqres.in/api/users"
-  },
-  "post",
-  "https://reqres.in/api/users");
+reqJson.mockup.start("D:\\App\\npm\\libfront-iqdavid\\test\\respuestasMockup");
 
 
-reqJson.startMockup();
+reqJson.mockup.start("D:\\App\\npm\\libfront-iqdavid\\test\\respuestasMockup");
 
-const debug = 1;
 
 describe('LibAsyncReqJson  Con Modo Mockup ', function () {
   
@@ -36,32 +23,11 @@ describe('LibAsyncReqJson  Con Modo Mockup ', function () {
     
     let respuesta = await reqJson.requestGET(url);
     
-    assert(
-      typeof respuesta === 'object',
-      'no se recibio una respueesta correcta'
-    );
-    assert(respuesta.data === 'ok', 'El dato userID no viene');
-    
+    assert(typeof respuesta === 'object', 'no se recibio una respueesta correcta'    );
+  
+  
+    let respuesta2 = await reqJson.requestGET(url);
     
   });
   
-  it('requestPOST', async () => {
-    let url = 'https://reqres.in/api/users';
-    const dataPost = {
-      "name": "morpheus",
-      "job": "leader"
-    };
-    
-    let respuestaPost = await reqJson.requestPOST(url, dataPost);
-    
-    assert(
-      typeof respuestaPost === 'object',
-      'no se recibio una respueesta correcta'
-    );
-    assert(respuestaPost.data === "yea", 'El dato ubody no se paso');
-
-    
-  });
-  
-
 });

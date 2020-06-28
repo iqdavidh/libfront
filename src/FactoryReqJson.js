@@ -1,5 +1,9 @@
+const fsOLD = require('fs');
+const fs = fsOLD.promises;
+const path = require('path');
+const beautify = require('json-beautify');
+const LibTexto = require("./LibTexto");
 const axios = require('axios').default;
-
 
 
 async function getHeaders(factoryHeader, paramHeader, customHeaders) {
@@ -17,44 +21,56 @@ async function getHeaders(factoryHeader, paramHeader, customHeaders) {
 
 const FactoryReqJson = (factoryHeader = null) => {
   
-  
+  let pathRespustaMockup;
   
   let isModoMockup = false;
   let listaMetodosMockUp = [];
   
-  const fnFindMockup = (method, url, isMatchSubstring) => {
-    
+  let isDebug = false;
+  let pathLogRequest = null;
+  let mockRootPathStore = "";
+  
+  const getPathFromRequest = (method, url, tipo = "json") => {
+    url = url.replace("https://", '');
+    url = url.replace("http://", '');
+    const fileName = LibTexto.getSlug(`${method}-${url}`) + '.' + tipo;
+    return path.join(mockRootPathStore, fileName)
+  };
+  
+  const fnFindMockup = async (method, url) => {
     
     const r = listaMetodosMockUp.find(k => {
-      if (isMatchSubstring) {
-        return (k.method === method && k.url.includes(url))
-      } else {
-        return (k.method === method && k.url === url)
-      }
+      return (k.method === method && k.url === url)
     });
     
     
-    if (!r) {
-      throw new Error(`No esta registrada esta url como respuesta mockup: ${method}***${url}`);
+    if (r) {
+      return r.objectRespuesta;
+    }
+    //buscar
+    const pathArchivo = getPathFromRequest(method, url);
+    
+    if (fsOLD.existsSync(pathArchivo)) {
+      const contenido = await fs.readFile(pathArchivo);
+      const objectRespuesta = JSON.parse(contenido);
+      listaMetodosMockUp.push({method, url, objectRespuesta});
+      return objectRespuesta;
     }
     
-    return r.objectRespuesta;
+    return null;
+    
   };
-
-//{method,url, objectRespuesta}
-  getRespuestaMockup = {
-    GET: (url) => {
-      return fnFindMockup('get', url);
+  
+  const getRespuestaMockup = {
+    GET: async (url) => {
+      
+      return await fnFindMockup('get', url);
     },
-    POST: (url) => {
-      return fnFindMockup('post', url);
+    POST: async (url) => {
+      return await fnFindMockup('post', url);
     }
   };
   
-  
-  
-  let isDebug = true;
-  let pathLogRequest = null;
   
   const consoleIfDebug = data => {
     if (isDebug) {
@@ -87,22 +103,30 @@ const FactoryReqJson = (factoryHeader = null) => {
     };
   };
   
-  
+  const registrarRespuesta = async (objectRespuesta, method, url, tipo = "json") => {
+    const contenido = beautify(objectRespuesta, null, 2, 100);
+    const pathAbs = getPathFromRequest(method, url, tipo);
+    await fs.writeFile(pathAbs, contenido);
+    
+    listaMetodosMockUp.push(
+      {
+        method: method.toLowerCase(),
+        url: url.toLowerCase(),
+        objectRespuesta
+      }
+    )
+  };
   
   return {
-    startMockup: (b = true) => {
-      isModoMockup = b;
+    mockup: {
+      start: (pathRootRespuestasMock) => {
+        isModoMockup = true;
+        mockRootPathStore = pathRootRespuestasMock
+      },
+      registrarRespuesta
+      
     },
-    registrarRespuestaMockUp: (objectRespuesta, method, url, isMatchSubstring = false) => {
-      listaMetodosMockUp.push(
-        {
-          method: method.toLowerCase(),
-          url: url.toLowerCase(),
-          isMatchSubstring,
-          objectRespuesta
-        }
-      )
-    },
+    
     
     setIsDebug: (b = true) => {
       isDebug = b;
@@ -116,7 +140,10 @@ const FactoryReqJson = (factoryHeader = null) => {
       logRequest({url}, 'request', url);
       
       if (isModoMockup) {
-        return getRespuestaMockup.GET(url);
+        const respuesta = await getRespuestaMockup.GET(url);
+        if (respuesta) {
+          return respuesta;
+        }
       }
       
       let headers = await getHeaders(factoryHeader, paramHeader, customHeaders);
@@ -127,6 +154,10 @@ const FactoryReqJson = (factoryHeader = null) => {
           .then(function (response) {
             consoleIfDebug(response);
             logRequest(response, 'response', url);
+            
+            if (isModoMockup) {
+              registrarRespuesta(response.data, 'get', url)
+            }
             return response.data;
           })
           .catch(function (error) {
@@ -144,7 +175,7 @@ const FactoryReqJson = (factoryHeader = null) => {
       logRequest(dataObjectForLog, 'request', url);
       
       if (isModoMockup) {
-        return getRespuestaMockup.POST(url);
+        return await getRespuestaMockup.POST(url);
       }
       
       let headers = await getHeaders(factoryHeader, paramHeader, customHeaders);
@@ -155,6 +186,11 @@ const FactoryReqJson = (factoryHeader = null) => {
           .then(function (response) {
             consoleIfDebug(response);
             logRequest(response, 'response', url);
+            
+            if (isModoMockup) {
+              this.registrarRespuesta(response.data, 'get', url)
+            }
+            
             return response.data;
           })
           .catch(function (error) {
@@ -251,6 +287,7 @@ const FactoryReqJson = (factoryHeader = null) => {
       }
     }
   }
+  
 };
 
 module.exports = FactoryReqJson;

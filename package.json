@@ -14,7 +14,7 @@
     "mocha": "^7.0.1"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "json-beautify": "^1.1.1",
     "moment-timezone": "^0.5.28"
   }
